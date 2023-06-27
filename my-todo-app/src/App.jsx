@@ -30,7 +30,7 @@ const App = () => {
       <input
         type="text"
         placeholder="Enter a new todo"
-        className="todo-input"
+        className="todo-input form-control"
         onKeyUp={(event) => {
           if (event.key === 'Enter') {
             addTodo(event.target.value);

@@ -4,7 +4,7 @@ import './index.css';
 const TodoList = ({ todos, markTodoDone, deleteTodo }) => {
   return (
     <div className='todo-box'>
-      <div className="todo-list">
+      <div className="todo-list list-group">
         {todos.map((todo, index) => (
           <Todo
             key={index}

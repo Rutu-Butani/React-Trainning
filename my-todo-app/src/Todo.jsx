@@ -1,3 +1,5 @@
+import React from 'react';
+
 const Todo = ({ todo, index, markTodoDone, deleteTodo }) => {
   const handleCheckboxChange = () => {
     markTodoDone(index);
@@ -11,11 +13,14 @@ const Todo = ({ todo, index, markTodoDone, deleteTodo }) => {
     <div className={`todo ${todo.done ? 'done' : ''}`}>
       <input
         type="checkbox"
+        className="form-check-input"
         checked={todo.done}
         onChange={handleCheckboxChange}
       />
-      <span>{todo.message}</span>
-      <button onClick={handleDeleteClick}>Delete</button>
+      <span className="todo-message">{todo.message}</span>
+      <button className="btn btn-link cross-button" onClick={handleDeleteClick}>
+        &times;
+      </button>
     </div>
   );
 };
