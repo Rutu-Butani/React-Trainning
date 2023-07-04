@@ -1,27 +1,44 @@
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import TodoList from './TodoList';
 import './App.css';
 
+const initialState = [];
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'ADD_TODO':
+      return [...state, action.payload];
+    case 'MARK_TODO_DONE':
+      return state.map((todo, index) => {
+        if (index === action.payload) {
+          return { ...todo, done: !todo.done };
+        }
+        return todo;
+      });
+    case 'DELETE_TODO':
+      return state.filter((_, index) => index !== action.payload);
+    default:
+      return state;
+  }
+};
+
 const App = () => {
-  const [todos, setTodos] = useState([]);
+  const [todos, dispatch] = useReducer(reducer, initialState);
 
   const addTodo = (message) => {
     const newTodo = {
       message: message,
       done: false,
     };
-    setTodos([...todos, newTodo]);
+    dispatch({ type: 'ADD_TODO', payload: newTodo });
   };
 
   const markTodoDone = (index) => {
-    const updatedTodos = [...todos];
-    updatedTodos[index].done = !updatedTodos[index].done;
-    setTodos(updatedTodos);
+    dispatch({ type: 'MARK_TODO_DONE', payload: index });
   };
 
   const deleteTodo = (index) => {
-    const updatedTodos = todos.filter((_, i) => i !== index);
-    setTodos(updatedTodos);
+    dispatch({ type: 'DELETE_TODO', payload: index });
   };
 
   return (
