@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Dynamic Element Addition</title>
+  <style>
+    .added-element {
+      margin-bottom: 10px;
+    }
+
+    .edit-delete-buttons {
+      margin-left: 10px;
+    }
+
+    .edit-controls {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Dynamic Element Addition</h1>
+
+  <select id="element-select">
+    <option value="h1">Heading 1 (h1)</option>
+    <option value="p">Paragraph (p)</option>
+    <option value="div">Div (div)</option>
+  </select>
+  <br><br>
+
+  <input type="color" id="element-color" value="#000000">
+  <br><br>
+
+  <textarea id="element-text" rows="4" cols="50" placeholder="Enter text for the element"></textarea>
+  <br><br>
+
+  <button onclick="addElement()">Add</button>
+
+  <div id="added-elements"></div>
+
+  <div id="editContainer" class="edit-controls">
+    <label for="editText">Edit Text:</label>
+    <textarea id="editText" rows="4" cols="50"></textarea>
+    <br><br>
+    <label for="editColor">Edit Color:</label>
+    <input type="color" id="editColor" name="editColor">
+    <br><br>
+    <button id="updateButton">Update</button>
+  </div>
+
+
+  <script>
+    function addElement() {
+      let selectedElement = document.getElementById("element-select").value;
+      let elementText = document.getElementById("element-text").value;
+      let elementColor = document.getElementById("element-color").value;
+
+      let element = document.createElement(selectedElement);
+      element.innerText = elementText;
+      element.style.color = elementColor;
+      element.className = "added-element";
+
+      let editButton = document.createElement("button");
+      editButton.innerText = "Edit";
+      editButton.onclick = function () {
+        editElement(element);
+      }
+
+      let deleteButton = document.createElement("button");
+      deleteButton.innerText = "Delete";
+      deleteButton.onclick = function () {
+        deleteElement(element);
+      }
+
+      let container = document.createElement("div");
+      container.appendChild(element);
+      container.appendChild(editButton);
+      container.appendChild(deleteButton);
+      container.className = "edit-delete-buttons";
+
+      document.getElementById("added-elements").appendChild(container);
+    }
+
+    function editElement(element) {
+      var editContainer = document.getElementById("editContainer");
+      var editTextarea = document.getElementById("editText");
+      var editColor = document.getElementById("editColor");
+
+      editTextarea.value = element.innerText;
+      editColor.value = element.style.color;
+
+      editContainer.style.display = "block";
+
+      var updateButton = document.getElementById("updateButton");
+      updateButton.onclick = function () {
+        updateElement(element, editTextarea.value, editColor.value);
+      };
+    }
+
+
+    function updateElement(element, newText, newColor) {
+      element.innerText = newText;
+      element.style.color = newColor;
+      document.getElementById("editContainer").style.display = "none";
+    }
+
+    function deleteElement(element) {
+      element.parentNode.parentNode.removeChild(element.parentNode);
+    }
+  </script>
+</body>
+
+</html>
