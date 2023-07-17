@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
 import UserTable from './UserTable';
 import CreateUser from './CreateUser';
+import { createContext } from 'react';
+export const UserContext = createContext()
 
 const App = () => {
   const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
 
-  const handleCreate = (user) => {
-    setUsers([...users, user]);
-  };
+  // const handleCreate = (user) => {
+  //   console.log(users);
+  //   setUsers([...users, user]);
+  // };
 
   return (
-    <div>
-      <UserTable users={users} />
-      <CreateUser onCreate={handleCreate} />
-    </div>
+      <UserContext.Provider value={{
+        users: users,
+        setUsers: setUsers
+      }}>
+        <UserTable />
+        <CreateUser  />
+      </UserContext.Provider>
   );
 };
 

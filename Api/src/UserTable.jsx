@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import EditUser from './EditUser';
+import { UserContext } from './App';
+import { useContext } from 'react';
 
 const UserTable = () => {
-  const [users, setUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
 
+  const {users,setUsers} = useContext(UserContext)
   useEffect(() => {
     fetchData();
   }, []);

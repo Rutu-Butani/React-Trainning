@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useContext } from 'react';
+import { UserContext } from './App';
 
-const CreateUser = ({ onCreate }) => {
+const CreateUser = () => {
+
+  const {users,setUsers} = useContext(UserContext)
+  // const handleCreate = (user) => {
+  //   console.log(users);
+  //   setUsers([...users, user]);
+  // };
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const newUser = { first_name: firstName, last_name: lastName, email };
-    try {
-      const response = await axios.post('https://reqres.in/api/users', newUser);
-      onCreate(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+    const newUser = {id: users.length+1, first_name: firstName, last_name: lastName, email: email, avatar: "demo image" };
+      const response = await axios.post('https://reqres.in/api/users', newUser)
+      setUsers([...users,await response.data])
   };
 
   return (
